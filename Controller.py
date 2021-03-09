@@ -36,6 +36,15 @@ class Controller():
         return ans
     
     @staticmethod
+    def parse_single(target: str) -> List[int]:
+        ans = Controller.__parse(target)
+        ret = []
+        for cmd in ans:
+            if len(cmd) > 1: raise ValueError('Not Single')
+            else: ret.append(cmd[0])
+        return ret
+    
+    @staticmethod
     def __count(target: ParsedCommand) -> int:
         cnt = 1
         for val in target:

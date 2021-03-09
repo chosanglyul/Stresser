@@ -1,7 +1,13 @@
+import datetime
+import shutil
+import os
+from subprocess import CalledProcessError
+from Controller import Controller
+from typing import Dict, Union, List
 StressJSON = Dict[str, Union[int, str]]
 
 class Stress():
-    def __init__(self, problem: Type[ProblemBase], solution_num: int, counters: int, runningtime: int, commandfile: str):
+    def __init__(self, problem: 'Type[ProblemBase]', solution_num: int, counters: int, runningtime: int, commandfile: str):
         self.__problem = problem
         self.__solution_num = solution_num
         self.__counters = counters
@@ -9,7 +15,7 @@ class Stress():
         self.__controller = Controller(commandfile)
 
     @staticmethod
-    def importJSON(problem: Type[ProblemBase], jsonobj: StressJSON) -> 'Stress':
+    def importJSON(problem: 'Type[ProblemBase]', jsonobj: StressJSON) -> 'Stress':
         solution_num = int(jsonobj['solution_num'])
         counters = int(jsonobj['counters'])
         runtime = int(jsonobj['runningtime'])

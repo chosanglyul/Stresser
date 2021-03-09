@@ -60,7 +60,8 @@ class CSource(Source):
 
     def getExcutablepath(self) -> str:
         execute, ext = os.path.splitext(self.getFilepath())
-        return execute
+        if platform.system() == 'Windows': return f'{execute}.exe'
+        else: return execute
     
     def compile(self) -> None:
         subprocess.check_call(['gcc', '-DEVAL', '-std=gnu11', '-O2', '-pipe', '-static', '-s', '-o', self.getExcutablepath(), self.getFilepath(), '-lm'])
@@ -71,7 +72,8 @@ class CppSource(Source):
 
     def getExcutablepath(self) -> str:
         execute, ext = os.path.splitext(self.getFilepath())
-        return execute
+        if platform.system() == 'Windows': return f'{execute}.exe'
+        else: return execute
 
     def compile(self) -> None:
         subprocess.check_call(['g++', '-DEVAL', '-std=gnu++11', '-O2', '-pipe', '-static', '-s', '-o', self.getExcutablepath(), self.getFilepath()])
@@ -81,7 +83,7 @@ class PythonSource(Source):
         super().__init__(filepath, 'Python')
 
     def _run_command(self) -> List[str]:
-        if platform.system() == 'Windows': return ['python', self.getExcutablepath()]
+        if platform.system() == 'Windows': return ['py', '-3', self.getExcutablepath()]
         else: return ['python3', self.getExcutablepath()]
 
 class TextSource(Source):
